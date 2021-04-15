@@ -15,10 +15,16 @@ Route::get('/ping', function() {
     return ['pong' => true];
 });
 
+//ROTAS DO AUTH
 Route::get('/401', [AuthController::class, 'unauthorized'])->name('login');
 
 Route::post('/auth/login', [AuthController::class, 'login']);
 Route::post('/auth/register', [AuthController::class, 'register']);
+
+Route::middleware('auth:api')->group(function() {
+    Route::post('/auth/validate', [AuthController::class, 'validateToken']);
+    Route::post('/auth/logout', [AuthController::class, 'logout']); 
+});
 
 
 //ESTATISTICAS
@@ -29,15 +35,9 @@ Route::get('/stats', [StatController::class, 'getAll']);
 Route::post('/article', [ArticleController::class, 'add'])->middleware('auth:api'); //TODO
 Route::put('/article/{id}', [ArticleController::class, 'update'])->middleware('auth:api'); //TODO
 
-Route::get('/articles', [ArticleController::class, 'getList']); //TODO
-Route::get('/article/{id}', [ArticleController::class, 'get']); //TODO
+Route::get('/articles', [ArticleController::class, 'getList']);
+Route::get('/article/{id}', [ArticleController::class, 'get']);
 
 
 //CATEGORIAS
-Route::get('/categories', [CategoryController::class, 'getAll']); //TODO
-
-
-Route::middleware('auth:api')->group(function() {
-    Route::post('/auth/validate', [AuthController::class, 'validateToken']); //TODO
-    Route::post('/auth/logout', [AuthController::class, 'logout']); //TODO    
-});
+Route::get('/categories', [CategoryController::class, 'getAll']);
