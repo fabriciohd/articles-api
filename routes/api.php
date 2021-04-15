@@ -17,12 +17,12 @@ Route::get('/ping', function() {
 
 Route::get('/401', [AuthController::class, 'unauthorized'])->name('login');
 
-Route::post('/auth/login', [AuthController::class, 'login']); //TODO
-Route::post('/auth/register', [AuthController::class, 'register']); //TODO
+Route::post('/auth/login', [AuthController::class, 'login']);
+Route::post('/auth/register', [AuthController::class, 'register']);
 
 
 //ESTATISTICAS
-Route::get('/stats', [StatController::class, 'getAll']); //TODO
+Route::get('/stats', [StatController::class, 'getAll']);
 
 
 //ARTIGOS
