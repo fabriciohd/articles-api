@@ -12,12 +12,15 @@ class ArticleController extends Controller
         $array = ['error' => '', 'list' => ''];
 
         $category = $request->input('category');
+        $title = $request->input('title');
+        $list = Article::select('title', 'resume', 'coverUrl');
         if ($category) {
-            $list = Article::select('name', 'description', 'imageUrl')->where('categoryId', $category)->get();
-        } else {
-            $list = Article::select('name', 'description', 'imageUrl')->get();
+            $list->where('categoryId', $category);
         }
-        $array['list'] = $list;
+        if ($title) {
+            $list->where('title', 'LIKE', '%'.$title.'%');
+        }
+        $array['list'] = $list->orderBy('id', 'DESC')->get();
 
         return $array;
     }
@@ -28,7 +31,7 @@ class ArticleController extends Controller
         $article = Article::find($id);
         if (!$article) {
             $array['error'] = 'Artigo não encontrado';
-            return response()->json($array, 400);
+            return response()->json($array, 404);
         }
         $array['article'] = $article;
 

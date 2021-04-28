@@ -22,14 +22,18 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
+            'description' => 'required',
             'password' => 'required',
             'password_confirm' => 'required|same:password',
+            'image' => 'file|mimes:jpg,png'
         ]);
 
         if (!$validator->fails()) {
             $name = $request->input('name');
             $email = $request->input('email');
+            $description = $request->input('description');
             $password = $request->input('password');
+            $image = $request->file('image');
 
             $hash = password_hash($password, PASSWORD_DEFAULT);
 
@@ -37,6 +41,12 @@ class AuthController extends Controller
             $newUser->name = $name;
             $newUser->email = $email;
             $newUser->password = $hash;
+            $newUser->description = $description;
+            if ($image) {
+                $image = $request->file('image')->store('public');
+                $imageName = explode('public/', $image);
+                $newUser->imageUrl = 'storage/'.$imageName[1];
+            }
             $newUser->save();
 
             $token = auth()->attempt([

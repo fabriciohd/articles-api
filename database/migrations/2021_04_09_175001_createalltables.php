@@ -17,21 +17,25 @@ class Createalltables extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('imageUrl')->nullable();
+            $table->string('description');
             $table->string('password');
-            $table->boolean('admin')->default(false);
+            $table->boolean('approved')->default(false);
+            $table->boolean('adm')->default(false);
         });
 
         Schema::create('categories', function(Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('coverUrl');
         });
 
         Schema::create('articles', function(Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('description');
-            $table->string('imageUrl');
-            $table->text('content');
+            $table->string('title');
+            $table->string('resume');
+            $table->string('coverUrl');
+            $table->binary('content');
             $table->integer('userId')->references('id')->on('users');
             $table->integer('categoryId')->references('id')->on('categories');          
         });
