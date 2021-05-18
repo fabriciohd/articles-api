@@ -33,7 +33,7 @@ class Createalltables extends Migration
         Schema::create('articles', function(Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('resume');
+            $table->text('resume');
             $table->string('coverUrl');
             $table->binary('content');
             $table->integer('userId')->references('id')->on('users');

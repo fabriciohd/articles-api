@@ -45,7 +45,7 @@ class AuthController extends Controller
             if ($image) {
                 $image = $request->file('image')->store('public');
                 $imageName = explode('public/', $image);
-                $newUser->imageUrl = 'storage/'.$imageName[1];
+                $newUser->imageUrl = $imageName[1];
             }
             $newUser->save();
 

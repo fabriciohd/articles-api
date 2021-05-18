@@ -16,11 +16,11 @@ class CategorySeeder extends Seeder
     {
         DB::table('categories')->insert([
             'name' => 'PHP',
-            'coverUrl' => 'storage/phpcover.jpg',
+            'coverUrl' => storage_path().'phpcover.jpg',
         ]);
         DB::table('categories')->insert([
             'name' => 'VUE',
-            'coverUrl' => 'storage/vuecover.jpg',
+            'coverUrl' => storage_path().'vuecover.jpg',
         ]);
     }
 }

@@ -12,9 +12,7 @@ use App\Http\Controllers\{
 };
 
 Route::get('/ping', function() {
-    /* return ['pong' => true]; */
-    $faker = \Faker\Factory::create('pt_BR');
-    echo $faker->name;
+    return ['pong' => true];
 });
 
 //ROTAS DO AUTH
@@ -43,11 +41,14 @@ Route::middleware('auth:api')->group(function() {
 });
 
 Route::middleware(['auth:api', 'check.approved'])->group(function() {
-    Route::post('/article', [ArticleController::class, 'addArticle']); //TODO
-    Route::put('/article/{id}', [ArticleController::class, 'setArticle']); //TODO
-    
-    Route::post('/categories', [CategoryController::class, 'addCategory']); //TODO
-    Route::put('/category/{id}', [CategoryController::class, 'setCategory']); //TODO
+    Route::post('/article', [ArticleController::class, 'addArticle']);
+    //Obrigatorios: title, resume, cover, content, categoryId
+    Route::put('/article/{id}', [ArticleController::class, 'setArticle']);
+    //Opcionais: title, resume, cover, content, categoryId
+    Route::post('/category', [CategoryController::class, 'addCategory']);
+    //Obrigatorios: name, cover
+    Route::put('/category/{id}', [CategoryController::class, 'setCategory']);
+    //Opcionais: name, cover
 });
 
 Route::middleware(['auth:api', 'check.adm'])->group(function() {

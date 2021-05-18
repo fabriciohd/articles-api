@@ -24,7 +24,7 @@ class ArticleFactory extends Factory
         return [
             'title' => $this->faker->realText($maxNbChars = 15, $indexSize = 1),
             'resume' => $this->faker->realText($maxNbChars = 120, $indexSize = 1),
-            'coverUrl' => $this->faker->image(storage_path()),
+            'coverUrl' => $this->faker->image('storage/app/public', '640', '480', 'cats', false),
             'content' => $this->faker->realText($maxNbChars = 2500, $indexSize = 5),
             'userId' => rand(1, 6),
             'categoryId' => rand(1, 2),
